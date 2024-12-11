@@ -90,4 +90,12 @@ public class EmployeeController {
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
     }
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("active employee")
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        log.info("active/deactivate employee id: {},{}", status, id);
+        employeeService.startOrStop(status, id);
+        return Result.success();
+    }
 }
