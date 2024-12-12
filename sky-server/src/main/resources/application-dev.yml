@@ -5,3 +5,9 @@ sky:
     port: 3306
     username: root
     password: 1234
+
+  alioss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    access-key-id: LTAI5tKedbjyzTp977cRB9ya
+    access-key-secret: hzF9Wjc7fpjCZTYyioPD0Fxs5kuJnp
+    bucket-name: big-event1213
