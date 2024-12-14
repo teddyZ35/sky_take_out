@@ -5,11 +5,14 @@ import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.SetmealService;
+import com.sky.vo.SetmealVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/setmeal")
@@ -31,5 +34,33 @@ public class SetMealController {
     public Result page(SetmealPageQueryDTO setmealPageQueryDTO) {
         PageResult pageResult = setmealService.page(setmealPageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    @DeleteMapping
+    @ApiOperation("setmeal delete")
+    public Result delete(@RequestParam List<Long> ids) {
+        setmealService.deleteBatch(ids);
+        return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("setmeal query by id")
+    public Result getByIdWithDish(@PathVariable Long id) {
+        SetmealVO setmealVO = setmealService.getByIdWithDish(id);
+        return Result.success(setmealVO);
+    }
+
+    @PutMapping
+    @ApiOperation("update setmeal")
+    public Result update(@RequestBody SetmealDTO setmealDTO) {
+        setmealService.updateWithDish(setmealDTO);
+        return Result.success();
+    }
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("update status")
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+        setmealService.startOrStop(status, id);
+        return Result.success();
     }
 }
