@@ -100,6 +100,8 @@ public class DishServiceImpl implements DishService {
         return dishVO;
     }
 
+
+
     @Override
     public void updateWithFlavor(DishDTO dishDTO) {
         Dish dish = new Dish();
@@ -117,4 +119,13 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insertBatch(flavors);
         }
     }
+
+    @Override
+    public List<Dish> getByCategoryId(Long categoryId) {
+        Dish dish = new Dish();
+        dish.setCategoryId(categoryId);
+        dish.setStatus(StatusConstant.ENABLE);
+        return dishMapper.list(dish);
+    }
+
 }
