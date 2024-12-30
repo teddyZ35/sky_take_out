@@ -368,6 +368,24 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(orders);
     }
 
+    @Override
+    public void reminder(Long id) {
+        Orders ordersDB = orderMapper.getById(id);
+
+        if (ordersDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+        
+        Map map = new HashMap<>();
+        map.put("type", 2);
+        map.put("orderId", id);
+        map.put("content", "No." + ordersDB.getNumber());
+
+        String json = JSON.toJSONString(map);
+
+        webSocketServer.sendToAllClient(json);
+    }
+
     private List<OrderVO> getOrderVOList(Page<Orders> page) {
         List<OrderVO> orderVOList = new ArrayList<>();
 
